@@ -4,14 +4,14 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  productGUID: 830c357f42cdd3549ad110d88c015ab3
+  productGUID: ad1f06c4e6c3d12499b0d825e50300c9
   AndroidProfiler: 0
   defaultScreenOrientation: 4
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: StacK O
+  productName: New Unity Project
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21176471, a: 1}
@@ -70,8 +70,6 @@ PlayerSettings:
   captureSingleScreen: 0
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
-  deferSystemGesturesMode: 0
-  hideHomeButton: 0
   submitAnalytics: 1
   usePlayerLog: 1
   bakeCollisionMeshes: 0
@@ -101,8 +99,6 @@ PlayerSettings:
   n3dsEnableVSync: 0
   ignoreAlphaClear: 0
   xboxOneResolution: 0
-  xboxOneSResolution: 0
-  xboxOneXResolution: 3
   xboxOneMonoLoggingLevel: 0
   xboxOneLoggingLevel: 1
   videoMemoryForVertexBuffers: 0
@@ -176,22 +172,15 @@ PlayerSettings:
   iPhone47inSplashScreen: {fileID: 0}
   iPhone55inPortraitSplashScreen: {fileID: 0}
   iPhone55inLandscapeSplashScreen: {fileID: 0}
-  iPhone58inPortraitSplashScreen: {fileID: 0}
-  iPhone58inLandscapeSplashScreen: {fileID: 0}
   iPadPortraitSplashScreen: {fileID: 0}
   iPadHighResPortraitSplashScreen: {fileID: 0}
   iPadLandscapeSplashScreen: {fileID: 0}
   iPadHighResLandscapeSplashScreen: {fileID: 0}
   appleTVSplashScreen: {fileID: 0}
-  appleTVSplashScreen2x: {fileID: 0}
   tvOSSmallIconLayers: []
-  tvOSSmallIconLayers2x: []
   tvOSLargeIconLayers: []
-  tvOSLargeIconLayers2x: []
   tvOSTopShelfImageLayers: []
-  tvOSTopShelfImageLayers2x: []
   tvOSTopShelfImageWideLayers: []
-  tvOSTopShelfImageWideLayers2x: []
   iOSLaunchScreenType: 0
   iOSLaunchScreenPortrait: {fileID: 0}
   iOSLaunchScreenLandscape: {fileID: 0}
@@ -288,9 +277,6 @@ PlayerSettings:
   switchTitleNames_9: 
   switchTitleNames_10: 
   switchTitleNames_11: 
-  switchTitleNames_12: 
-  switchTitleNames_13: 
-  switchTitleNames_14: 
   switchPublisherNames_0: 
   switchPublisherNames_1: 
   switchPublisherNames_2: 
@@ -303,9 +289,6 @@ PlayerSettings:
   switchPublisherNames_9: 
   switchPublisherNames_10: 
   switchPublisherNames_11: 
-  switchPublisherNames_12: 
-  switchPublisherNames_13: 
-  switchPublisherNames_14: 
   switchIcons_0: {fileID: 0}
   switchIcons_1: {fileID: 0}
   switchIcons_2: {fileID: 0}
@@ -318,9 +301,6 @@ PlayerSettings:
   switchIcons_9: {fileID: 0}
   switchIcons_10: {fileID: 0}
   switchIcons_11: {fileID: 0}
-  switchIcons_12: {fileID: 0}
-  switchIcons_13: {fileID: 0}
-  switchIcons_14: {fileID: 0}
   switchSmallIcons_0: {fileID: 0}
   switchSmallIcons_1: {fileID: 0}
   switchSmallIcons_2: {fileID: 0}
@@ -333,9 +313,6 @@ PlayerSettings:
   switchSmallIcons_9: {fileID: 0}
   switchSmallIcons_10: {fileID: 0}
   switchSmallIcons_11: {fileID: 0}
-  switchSmallIcons_12: {fileID: 0}
-  switchSmallIcons_13: {fileID: 0}
-  switchSmallIcons_14: {fileID: 0}
   switchManualHTML: 
   switchAccessibleURLs: 
   switchLegalInformation: 
@@ -377,7 +354,6 @@ PlayerSettings:
   switchLocalCommunicationIds_7: 
   switchParentalControl: 0
   switchAllowsScreenshot: 1
-  switchAllowsVideoCapturing: 1
   switchDataLossConfirmation: 0
   switchSupportedNpadStyles: 3
   switchSocketConfigEnabled: 0
@@ -528,14 +504,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: StacK O
+  metroPackageName: New Unity Project
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: StacK O
+  metroApplicationDescription: New Unity Project
   wsaImages: {}
   metroTileShortName: 
   metroCommandLineArgsFile: 
@@ -609,8 +585,8 @@ PlayerSettings:
   cloudServicesEnabled: {}
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
-  cloudProjectId: eb7f0579-241c-4168-8ba5-228cb6823e20
-  projectName: StacK O
+  cloudProjectId: 909e088d-2cfe-432e-a910-6e4552e33c5c
+  projectName: New Unity Project
   organizationId: code_krosis
   cloudEnabled: 0
   enableNewInputSystem: 0
