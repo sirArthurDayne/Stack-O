@@ -2,7 +2,7 @@
 
 public class StackController : MonoBehaviour
 {
-    #region Variables
+    #region VariablesPrivadas
     private GameObject[] theStack;                                        //Contendra los 12 cubos(object)
     private int cubeIndex;                                                //Cantidad de cubos a mover(x,y)
     private int cubeYMovement = 0;                                        //Representa la coordenada Y a moverse
@@ -22,6 +22,10 @@ public class StackController : MonoBehaviour
     private const float CUBECOMBOBONUS = 0.25f;                           //Incremento al mantener un combo de 5
     #endregion
 
+    #region Variables Publicas
+    public Color32[] colors = new Color32[5];               //Colores de los bloques
+
+    #endregion
     #region Metodos
 
     private void Start()
@@ -56,6 +60,7 @@ public class StackController : MonoBehaviour
     }
 
 
+    //----------------COLOCAR CUBOS DEL STACK----------------------//
     private bool PlaceCubes()
     {
         Transform cubeT = theStack[cubeIndex].transform;                   //Ref a las coordenadas de los cubos
@@ -198,7 +203,7 @@ public class StackController : MonoBehaviour
         return true;
     }
 
-    //----------------------------SELECCION DE CUBOS Y CAMBIO DE EJE-----------------------//
+    //----------------SELECCION DE CUBOS Y CAMBIO DE EJE----------//
     private void SpawnCubes()
     {
         //Guardamos la coordenada del cubo antes de pasar al siguiente
@@ -224,7 +229,7 @@ public class StackController : MonoBehaviour
         theStack[cubeIndex].transform.localScale = new Vector3(stackBounds.x, 1, stackBounds.z);
     }
 
-    //----------------------------CONTROL DE OSCILACIONES X,Z-------------------------------//
+    //-----------------------CONTROL DE OSCILACIONES X,Z----------------//
     private void MoveCubes()
     {
         if (dropCube) return;
@@ -240,7 +245,7 @@ public class StackController : MonoBehaviour
   
     }
 
-    //---------------------------CREACION DE ESCOMBROS------------------//
+    //--------------------CREACION DE ESCOMBROS----------------------//
     private void CreateRubble(Vector3 pos, Vector3 scale )
     {
         //Crea un cubo externo al stack
@@ -250,7 +255,30 @@ public class StackController : MonoBehaviour
         rubbleCube.AddComponent<Rigidbody>();//gravedad
     }
 
-    //-----------------------------FIN DEL JUEGO----------------------//
+    //---------------TRANSICION DE COLORES--------------------//
+    private Color32 ColorPicker(Color32 a,Color32 b, Color32 c, Color32 d, Color32 e, float t)
+    {
+        if (t < 0.25f) return Color32.Lerp(a, b, t / 0.25f);
+        else if (t < 0.50f) return Color32.Lerp(b, c, (t - 0.25f) / 0.25f);
+        else if (t < 0.75f) return Color32.Lerp(c, d, t / 0.75f);
+        else return Color32.Lerp(d, e, (t - 0.75f) / 0.75f);
+    }
+
+    //------------------MODIFICACION DEL VERTEX SHADER------------//
+    private void MeshColor(Mesh mesh)
+    {
+        Vector3[] vertices = mesh.vertices;         //guarda las coordenadasMesh de los vertices de los cubos
+        Color32[] cubeColors = new Color32[vertices.Length];//almacena colores q iran a los vertices
+
+        //Variacion del time de los colores usando Funcion seno
+        float time = Mathf.Sin(cubeYMovement * 0.10f);
+
+        //Asigna un color a cada espacio del array
+        for (int i = 0; i < vertices.Length; i++)
+            cubeColors[i] = ColorPicker(colors[0], colors[1], colors[2], colors[3], colors[4], time); 
+    }
+        
+    //----------------------FIN DEL JUEGO----------------------//
     private void GameOver()
     {
         dropCube = true;
