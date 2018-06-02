@@ -19,7 +19,7 @@ public class StackController : MonoBehaviour
     private Vector3 stackBounds = new Vector3(CUBEBOUNDS, 0, CUBEBOUNDS); //Mantener un registro de los lim X,Z del cubo al dar click
     private bool dropCube = false;
     private const int CUBECOMBOSTART = 4;                                 //Inicio del combo
-    private const float CUBECOMBOBONUS = 0.25f;                           //Incremento al mantener un combo de 5
+    private const float CUBECOMBOBONUS = 0.25f;                           //Incremento al tamano x mantener un combo de 5
     #endregion
 
     #region Variables Publicas
@@ -227,6 +227,9 @@ public class StackController : MonoBehaviour
 
         //Preserva la escala del cubo anterior 
         theStack[cubeIndex].transform.localScale = new Vector3(stackBounds.x, 1, stackBounds.z);
+
+        //Agregar color al stack
+        MeshColor(theStack[cubeIndex].GetComponent<MeshFilter>().mesh);
     }
 
     //-----------------------CONTROL DE OSCILACIONES X,Z----------------//
@@ -253,6 +256,9 @@ public class StackController : MonoBehaviour
         rubbleCube.transform.position = pos;
         rubbleCube.transform.localScale = scale;
         rubbleCube.AddComponent<Rigidbody>();//gravedad
+
+        //Darle color a los escombros
+        MeshColor(rubbleCube.GetComponent<MeshFilter>().mesh);
     }
 
     //---------------TRANSICION DE COLORES--------------------//
@@ -260,7 +266,7 @@ public class StackController : MonoBehaviour
     {
         if (t < 0.25f) return Color32.Lerp(a, b, t / 0.25f);
         else if (t < 0.50f) return Color32.Lerp(b, c, (t - 0.25f) / 0.25f);
-        else if (t < 0.75f) return Color32.Lerp(c, d, t / 0.75f);
+        else if (t < 0.75f) return Color32.Lerp(c, d, t / 0.50f);
         else return Color32.Lerp(d, e, (t - 0.75f) / 0.75f);
     }
 
@@ -271,11 +277,14 @@ public class StackController : MonoBehaviour
         Color32[] cubeColors = new Color32[vertices.Length];//almacena colores q iran a los vertices
 
         //Variacion del time de los colores usando Funcion seno
-        float time = Mathf.Sin(cubeYMovement * 0.10f);
+        float time = Mathf.Sin(cubeYMovement * 0.45f);
 
         //Asigna un color a cada espacio del array
         for (int i = 0; i < vertices.Length; i++)
-            cubeColors[i] = ColorPicker(colors[0], colors[1], colors[2], colors[3], colors[4], time); 
+            cubeColors[i] = ColorPicker(colors[0], colors[1], colors[2], colors[3], colors[4], time);
+
+        //pasar colores del array al mesh
+        mesh.colors32 = cubeColors;
     }
         
     //----------------------FIN DEL JUEGO----------------------//
