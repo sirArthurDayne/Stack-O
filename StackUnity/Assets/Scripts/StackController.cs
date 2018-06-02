@@ -83,6 +83,25 @@ public class StackController : MonoBehaviour
                 //Asignar nueva Escala al cubo que se va a cortar
                 cubeT.localScale = new Vector3(stackBounds.x, 1, stackBounds.z);
                 Debug.Log("Escala cubos " + cubeT.localScale);
+
+                //Crear efecto de escombro ejeX
+                CreateRubble
+                    ( 
+                        new Vector3//Coordenadas
+                        (
+                            (cubeT.position.x > 0) ? cubeT.position.x + (cubeT.localScale.x/2) 
+                                                   : cubeT.position.x - (cubeT.localScale.x/2),
+                            cubeT.position.y,
+                            cubeT.position.z
+                        ),
+                        new Vector3//escala
+                        ( 
+                            Mathf.Abs(deltaX),
+                            1,
+                            cubeT.localScale.z 
+                        )
+                    );
+
                 //Reposicionar cubo cortado a partir de donde se hizo click
                 cubeT.localPosition = new Vector3(middle - (lastCubePos.x / 2), cubeYMovement, lastCubePos.z);
             }
@@ -129,6 +148,24 @@ public class StackController : MonoBehaviour
                 
                 //Asignar nueva escala para simular corte 
                 cubeT.localScale = new Vector3(stackBounds.x, 1, stackBounds.z);
+
+                //Crear efecto de escombro ejeZ
+                CreateRubble
+                    (
+                        new Vector3
+                        (
+                            cubeT.position.x,
+                            cubeT.position.y,
+                            (cubeT.position.z > 0) ? cubeT.position.z + (cubeT.localScale.z / 2)
+                                                   : cubeT.position.z - (cubeT.localScale.z / 2)
+                         ),
+                         new Vector3
+                         (
+                             cubeT.localScale.x,
+                             1,
+                             Mathf.Abs(deltaZ)
+                         )
+                    );
 
                 //Reubicar el cubo cortado ejez
                 cubeT.localPosition = new Vector3(lastCubePos.x, cubeYMovement, middle - (lastCubePos.x / 2));
@@ -187,7 +224,7 @@ public class StackController : MonoBehaviour
         theStack[cubeIndex].transform.localScale = new Vector3(stackBounds.x, 1, stackBounds.z);
     }
 
-    //----------------------------------CONTROL DE OSCILACIONES X,Z-------------------------------//
+    //----------------------------CONTROL DE OSCILACIONES X,Z-------------------------------//
     private void MoveCubes()
     {
         if (dropCube) return;
@@ -201,6 +238,16 @@ public class StackController : MonoBehaviour
         else                                                               //Oscilar en eje Z
             theStack[cubeIndex].transform.localPosition = new Vector3(newSecodPosition, cubeYMovement, Mathf.Sin(transitionSpeed) * CUBEBOUNDS);
   
+    }
+
+    //---------------------------CREACION DE ESCOMBROS------------------//
+    private void CreateRubble(Vector3 pos, Vector3 scale )
+    {
+        //Crea un cubo externo al stack
+        GameObject rubbleCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        rubbleCube.transform.position = pos;
+        rubbleCube.transform.localScale = scale;
+        rubbleCube.AddComponent<Rigidbody>();//gravedad
     }
 
     //-----------------------------FIN DEL JUEGO----------------------//
