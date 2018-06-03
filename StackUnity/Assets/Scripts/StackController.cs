@@ -24,7 +24,7 @@ public class StackController : MonoBehaviour
 
     #region Variables Publicas
     public Color32[] colors = new Color32[5];               //Colores de los bloques
-
+    public Material rubbleMat;                              //Material para los escombros
     #endregion
     #region Metodos
 
@@ -35,6 +35,7 @@ public class StackController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             theStack[i] = transform.GetChild(i).gameObject;                 //manda las coordenadas al array
+            MeshColor(theStack[i].GetComponent<MeshFilter>().mesh);         //Asignar un color al iniciar
         }
 
         cubeIndex = theStack.Length - 1;                                    //guarda cantidad cubos en lista
@@ -228,7 +229,7 @@ public class StackController : MonoBehaviour
         //Preserva la escala del cubo anterior 
         theStack[cubeIndex].transform.localScale = new Vector3(stackBounds.x, 1, stackBounds.z);
 
-        //Agregar color al stack
+        //Agregar colores al stack
         MeshColor(theStack[cubeIndex].GetComponent<MeshFilter>().mesh);
     }
 
@@ -257,7 +258,9 @@ public class StackController : MonoBehaviour
         rubbleCube.transform.localScale = scale;
         rubbleCube.AddComponent<Rigidbody>();//gravedad
 
-        //Darle color a los escombros
+        //Recuperar y asignar el material de escombros
+        rubbleCube.GetComponent<MeshRenderer>().material = rubbleMat;
+        //Darle el mismo color a los escombros
         MeshColor(rubbleCube.GetComponent<MeshFilter>().mesh);
     }
 
