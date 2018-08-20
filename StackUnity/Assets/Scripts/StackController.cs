@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class StackController : MonoBehaviour
 {
@@ -12,20 +13,22 @@ public class StackController : MonoBehaviour
     private bool oscilatingX = true;                                      //Controla oscilacion en eje X,Z
     private float newSecodPosition = 0f;                                  //Reposiciona el cubo en eje secundario al que oscila
     private Vector3 theStackNewPos;                                       //Almacenara nueva pos del stack al dar click
-    private const float STACKDOWNSPEED = 5.0f;                            //Velocidad q tardara en descender el stack
+    private const float STACKDOWNSPEED = 10.0f;                            //Velocidad q tardara en descender el stack
     private Vector3 lastCubePos;                                          //Guarda la previa pos del cubo
     private const float ERRORMARGIN = 0.25f;                               //margen de error al colocar el cubo en stack
-    private int cubeCombos = 0;                                           //Puntaje al jugar
+    private int cubeCombos = 0;                                           //Combos Puntaje
     private Vector3 stackBounds = new Vector3(CUBEBOUNDS, 0, CUBEBOUNDS); //Mantener un registro de los lim X,Z del cubo al dar click
-    private bool dropCube = false;
+    private bool dropCube = false;                                        //bool q controla caida del cubo al fallar
     private const int CUBECOMBOSTART = 4;                                 //Inicio del combo
     private const float CUBECOMBOBONUS = 0.25f;                           //Incremento al tamano x mantener un combo de 5
+    public Text scoreText;                                               //texto de puntaje nen pantalla
     #endregion
 
     #region Variables Publicas
     public Color32[] colors = new Color32[5];               //Colores de los bloques
     public Material rubbleMat;                              //Material para los escombros
     #endregion
+    
     #region Metodos
 
     private void Start()
@@ -50,6 +53,7 @@ public class StackController : MonoBehaviour
             {
                 SpawnCubes();                                                     //Coloca el nuevo cubo
                 cubeYMovement++;                                                  //Aumenta coordenada Y de cubos
+                scoreText.text = cubeYMovement.ToString();                          
             }
             else GameOver();                                                     //Si perdimos activa el gameover
 
@@ -93,14 +97,14 @@ public class StackController : MonoBehaviour
                 //Crear efecto de escombro ejeX
                 CreateRubble
                     ( 
-                        new Vector3//Coordenadas
+                        new Vector3//Coordenadas del escombro
                         (
                             (cubeT.position.x > 0) ? cubeT.position.x + (cubeT.localScale.x/2) 
                                                    : cubeT.position.x - (cubeT.localScale.x/2),
                             cubeT.position.y,
                             cubeT.position.z
                         ),
-                        new Vector3//escala
+                        new Vector3//escala del escombro
                         ( 
                             Mathf.Abs(deltaX),
                             1,
@@ -267,10 +271,10 @@ public class StackController : MonoBehaviour
     //---------------TRANSICION DE COLORES--------------------//
     private Color32 ColorPicker(Color32 a,Color32 b, Color32 c, Color32 d, Color32 e, float t)
     {
-        if (t < 0.25f) return Color32.Lerp(a, b, t / 0.25f);
-        else if (t < 0.50f) return Color32.Lerp(b, c, (t - 0.25f) / 0.25f);
-        else if (t < 0.75f) return Color32.Lerp(c, d, t / 0.50f);
-        else return Color32.Lerp(d, e, (t - 0.75f) / 0.75f);
+        if (t < 0.30f) return Color32.Lerp(a, b, t / 0.30f);
+        else if (t < 0.50f) return Color32.Lerp(b, c, (t - 0.30f) / 0.30f);
+        else if (t < 0.60f) return Color32.Lerp(c, d, t / 0.60f);
+        else return Color32.Lerp(d, e, (t - 0.60f) / 0.60f);
     }
 
     //------------------MODIFICACION DEL VERTEX SHADER------------//
@@ -281,7 +285,6 @@ public class StackController : MonoBehaviour
 
         //Variacion del time de los colores usando Funcion seno
         float time = Mathf.Sin(cubeYMovement * 0.45f);
-
         //Asigna un color a cada espacio del array
         for (int i = 0; i < vertices.Length; i++)
             cubeColors[i] = ColorPicker(colors[0], colors[1], colors[2], colors[3], colors[4], time);
@@ -297,7 +300,6 @@ public class StackController : MonoBehaviour
 
         //Hace que el cubo caiga por gravedad
         theStack[cubeIndex].AddComponent<Rigidbody>();
-
     }
     #endregion
 }
