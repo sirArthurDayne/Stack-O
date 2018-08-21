@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
+//VIDEO 1:36hora
 public class StackController : MonoBehaviour
 {
     #region VariablesPrivadas
@@ -21,12 +23,13 @@ public class StackController : MonoBehaviour
     private bool dropCube = false;                                        //bool q controla caida del cubo al fallar
     private const int CUBECOMBOSTART = 4;                                 //Inicio del combo
     private const float CUBECOMBOBONUS = 0.25f;                           //Incremento al tamano x mantener un combo de 5
-    public Text scoreText;                                               //texto de puntaje nen pantalla
     #endregion
 
     #region Variables Publicas
     public Color32[] colors = new Color32[5];               //Colores de los bloques
     public Material rubbleMat;                              //Material para los escombros
+    public Text scoreText;                                  //texto de puntaje nen pantalla
+    public GameObject endPanel;                             //Panel al terminar juego
     #endregion
     
     #region Metodos
@@ -47,6 +50,8 @@ public class StackController : MonoBehaviour
   
     private void Update()
     {
+        if (dropCube) return;
+
         if (Input.GetMouseButtonDown(0))                                          //Si damos click
         {
             if (PlaceCubes())                                                     // si aun no pierde
@@ -240,7 +245,7 @@ public class StackController : MonoBehaviour
     //-----------------------CONTROL DE OSCILACIONES X,Z----------------//
     private void MoveCubes()
     {
-        if (dropCube) return;
+        
 
         transitionSpeed += cubeSpeed * Time.deltaTime;                      //Velocidad de transicion
         //Hace Oscilar al cubo con una vel y actualiza coordenada en eje secundario
@@ -296,10 +301,21 @@ public class StackController : MonoBehaviour
     //----------------------FIN DEL JUEGO----------------------//
     private void GameOver()
     {
+        if (PlayerPrefs.GetInt("score") > cubeYMovement)
+        {
+            PlayerPrefs.SetInt("score", cubeYMovement);
+        }
         dropCube = true;
-
+        endPanel.SetActive(true);
         //Hace que el cubo caiga por gravedad
         theStack[cubeIndex].AddComponent<Rigidbody>();
     }
+
+    //-----------------REINICIAR JUEGO-------------//
+    public void RestartGame(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     #endregion
 }
