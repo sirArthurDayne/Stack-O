@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement; 
 
-//VIDEO 1:36hora
+
 public class StackController : MonoBehaviour
 {
     #region VariablesPrivadas
